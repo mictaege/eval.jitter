@@ -1,0 +1,65 @@
+group 'com.github.mictaege'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'jitter'
+apply plugin: 'application'
+apply plugin: 'idea'
+
+sourceCompatibility = 1.8
+
+buildscript {
+    repositories {
+        mavenCentral()
+        mavenLocal()
+    }
+    dependencies {
+        classpath group: 'com.github.mictaege', name: 'jitter-plugin', version:'1.0-SNAPSHOT'
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile "com.github.mictaege:jitter-api:1.0"
+    compile "de.jensd:fontawesomefx:8.9"
+    testCompile "junit:junit:4.12"
+    testCompile "org.mockito:mockito-core:2.2.11"
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir 'src/main/java'
+        }
+        resources {
+            srcDir 'src/main/resources'
+        }
+    }
+    test {
+        java {
+            srcDir 'src/test/java '
+        }
+        resources {
+            srcDir 'src/test/resources'
+        }
+    }
+}
+
+idea {
+    module {
+        inheritOutputDirs = false
+        outputDir file('build/classes/main')
+        testOutputDir file('build/classes/test')
+    }
+}
+
+mainClassName = "com.github.mictaege.eval.jitter.TowerControlApp"
+
+jitter {
+
+    flavours = ['ESA', 'NASA', 'ROSKOSMOS']
+
+}
