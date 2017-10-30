@@ -14,7 +14,7 @@ buildscript {
         mavenLocal()
     }
     dependencies {
-        classpath group: 'com.github.mictaege', name: 'jitter-plugin', version:'1.0-SNAPSHOT'
+        classpath group: 'com.github.mictaege', name: 'jitter-plugin', version:'1.0'
     }
 }
 
