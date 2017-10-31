@@ -2,20 +2,20 @@ package com.github.mictaege.eval.jitter;
 
 import com.github.mictaege.jitter.api.Fork;
 import com.github.mictaege.jitter.api.OnlyIf;
-import org.junit.Test;
+import org.concordion.integration.junit4.ConcordionRunner;
+import org.junit.runner.RunWith;
 
-import static com.github.mictaege.eval.jitter.BearerType.ATLAS;
-import static com.github.mictaege.eval.jitter.BearerType.TITAN;
+import java.util.List;
+
 import static com.github.mictaege.eval.jitter.Flavour.NASA;
-import static org.hamcrest.CoreMatchers.hasItems;
-import static org.junit.Assert.assertThat;
 
 @OnlyIf(NASA)
+@RunWith(ConcordionRunner.class)
+@SuppressWarnings("squid:S2187")
 public class NasaDaoTest {
 
-    @Test
-    public void shouldProvideNasaBearers() {
-        assertThat(dao().findBearers(), hasItems(ATLAS, TITAN));
+    public List<BearerType> shouldProvideNasaBearers() {
+        return dao().findBearers();
     }
 
     @Fork(ifActive = NASA, to = "nasaDao")

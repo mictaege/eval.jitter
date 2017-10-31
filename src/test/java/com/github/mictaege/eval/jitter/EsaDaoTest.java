@@ -2,19 +2,20 @@ package com.github.mictaege.eval.jitter;
 
 import com.github.mictaege.jitter.api.Fork;
 import com.github.mictaege.jitter.api.OnlyIf;
-import org.junit.Test;
+import org.concordion.integration.junit4.ConcordionRunner;
+import org.junit.runner.RunWith;
 
-import static com.github.mictaege.eval.jitter.BearerType.ARIANE5;
+import java.util.List;
+
 import static com.github.mictaege.eval.jitter.Flavour.ESA;
-import static org.hamcrest.CoreMatchers.hasItems;
-import static org.junit.Assert.assertThat;
 
 @OnlyIf(ESA)
+@RunWith(ConcordionRunner.class)
+@SuppressWarnings("squid:S2187")
 public class EsaDaoTest {
 
-    @Test
-    public void shouldProvideEsaBearers() {
-        assertThat(dao().findBearers(), hasItems(ARIANE5));
+    public List<BearerType> shouldProvideEsaBearers() {
+        return dao().findBearers();
     }
 
     @Fork(ifActive = ESA, to = "esaDao")
