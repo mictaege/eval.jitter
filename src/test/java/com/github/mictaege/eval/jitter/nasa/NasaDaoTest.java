@@ -1,5 +1,8 @@
-package com.github.mictaege.eval.jitter;
+package com.github.mictaege.eval.jitter.nasa;
 
+import com.github.mictaege.eval.jitter.BearerType;
+import com.github.mictaege.eval.jitter.Dao;
+import com.github.mictaege.eval.jitter.DaoIF;
 import com.github.mictaege.jitter.api.Fork;
 import com.github.mictaege.jitter.api.OnlyIf;
 import org.concordion.integration.junit4.ConcordionRunner;
@@ -20,7 +23,7 @@ public class NasaDaoTest {
 
     @Fork(ifActive = NASA, to = "nasaDao")
     private DaoIF dao() {
-        return new Dao.NasaDao();
+        return new NasaDao();
     }
 
     private DaoIF nasaDao() {
