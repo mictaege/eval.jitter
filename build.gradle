@@ -8,13 +8,17 @@ apply plugin: 'idea'
 
 sourceCompatibility = 1.8
 
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.2.1'
+}
+
 buildscript {
     repositories {
         mavenCentral()
         mavenLocal()
     }
     dependencies {
-        classpath group: 'com.github.mictaege', name: 'jitter-plugin', version:'1.3'
+        classpath group: 'com.github.mictaege', name: 'jitter-plugin', version:'1.4'
     }
 }
 
@@ -113,7 +117,7 @@ tasks.compileUiTestJava.dependsOn tasks.compileBeansTestJava
 tasks.compileBeansTestJava.dependsOn tasks.compileModelTestJava
 
 dependencies {
-    modelCompile "com.github.mictaege:jitter-api:1.3"
+    modelCompile "com.github.mictaege:jitter-api:1.4"
     modelCompile "de.jensd:fontawesomefx:8.9"
     modelTestCompile "junit:junit:4.12"
     modelTestCompile "org.mockito:mockito-core:2.2.11"
