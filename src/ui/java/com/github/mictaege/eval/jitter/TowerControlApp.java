@@ -22,10 +22,6 @@ public class TowerControlApp extends Application {
 
     public static final ResourceBundle RES = getBundle(TowerControlApp.class.getName());
 
-    public static void main(String[] args) {
-        launch(args);
-    }
-
     @Override
     public void start(Stage primaryStage) throws Exception {
         final TowerControlList list = new TowerControlList();

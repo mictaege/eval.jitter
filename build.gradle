@@ -14,7 +14,7 @@ buildscript {
         mavenLocal()
     }
     dependencies {
-        classpath group: 'com.github.mictaege', name: 'jitter-plugin', version:'1.2'
+        classpath group: 'com.github.mictaege', name: 'jitter-plugin', version:'1.3'
     }
 }
 
@@ -23,16 +23,68 @@ repositories {
     mavenLocal()
 }
 
-dependencies {
-    compile "com.github.mictaege:jitter-api:1.2"
-    compile "de.jensd:fontawesomefx:8.9"
-    testCompile "junit:junit:4.12"
-    testCompile "org.mockito:mockito-core:2.2.11"
-    testCompile "org.concordion:concordion:2.1.1"
-}
-
 sourceSets {
+    model {
+        java {
+            srcDir 'src/model/java'
+        }
+        resources {
+            srcDir 'src/model/resources'
+        }
+    }
+    modelTest {
+        compileClasspath += model.runtimeClasspath
+        runtimeClasspath += model.runtimeClasspath
+        java {
+            srcDir 'src/modelTest/java '
+        }
+        resources {
+            srcDir 'src/modelTest/resources'
+        }
+    }
+    beans {
+        compileClasspath += model.runtimeClasspath
+        runtimeClasspath += model.runtimeClasspath
+        java {
+            srcDir 'src/beans/java'
+        }
+        resources {
+            srcDir 'src/beans/resources'
+        }
+    }
+    beansTest {
+        compileClasspath += beans.runtimeClasspath + modelTest.runtimeClasspath
+        runtimeClasspath += beans.runtimeClasspath + modelTest.runtimeClasspath
+        java {
+            srcDir 'src/beansTest/java'
+        }
+        resources {
+            srcDir 'src/beansTest/resources'
+        }
+    }
+    ui {
+        compileClasspath += beans.runtimeClasspath
+        runtimeClasspath += beans.runtimeClasspath
+        java {
+            srcDir 'src/ui/java'
+        }
+        resources {
+            srcDir 'src/ui/resources'
+        }
+    }
+    uiTest {
+        compileClasspath += ui.runtimeClasspath + beansTest.runtimeClasspath
+        runtimeClasspath += ui.runtimeClasspath + beansTest.runtimeClasspath
+        java {
+            srcDir 'src/uiTest/java'
+        }
+        resources {
+            srcDir 'src/uiTest/resources'
+        }
+    }
     main {
+        compileClasspath += ui.runtimeClasspath
+        runtimeClasspath += ui.runtimeClasspath
         java {
             srcDir 'src/main/java'
         }
@@ -41,8 +93,10 @@ sourceSets {
         }
     }
     test {
+        compileClasspath += main.runtimeClasspath + uiTest.runtimeClasspath
+        runtimeClasspath += main.runtimeClasspath + uiTest.runtimeClasspath
         java {
-            srcDir 'src/test/java '
+            srcDir 'src/test/java'
         }
         resources {
             srcDir 'src/test/resources'
@@ -50,18 +104,49 @@ sourceSets {
     }
 }
 
+tasks.compileJava.dependsOn tasks.compileUiJava
+tasks.compileUiJava.dependsOn tasks.compileBeansJava
+tasks.compileBeansJava.dependsOn tasks.compileModelJava
+
+tasks.compileTestJava.dependsOn tasks.compileUiTestJava
+tasks.compileUiTestJava.dependsOn tasks.compileBeansTestJava
+tasks.compileBeansTestJava.dependsOn tasks.compileModelTestJava
+
+dependencies {
+    modelCompile "com.github.mictaege:jitter-api:1.3"
+    modelCompile "de.jensd:fontawesomefx:8.9"
+    modelTestCompile "junit:junit:4.12"
+    modelTestCompile "org.mockito:mockito-core:2.2.11"
+    modelTestCompile "org.concordion:concordion:2.1.1"
+}
+
 idea {
     module {
         inheritOutputDirs = false
+        testSourceDirs += file('modelTest')
+        testSourceDirs += file('beansTest')
+        testSourceDirs += file('uiTest')
         outputDir file('build/classes/main')
         testOutputDir file('build/classes/test')
     }
 }
 
-mainClassName = "com.github.mictaege.eval.jitter.TowerControlApp"
+mainClassName = "com.github.mictaege.eval.jitter.TowerControlMain"
+
+jar {
+    from sourceSets.model.output
+    from sourceSets.beans.output
+    from sourceSets.ui.output
+    from sourceSets.main.output
+}
+
+run {
+    classpath sourceSets.main.runtimeClasspath
+}
 
 jitter {
 
     flavours = ['ESA', 'NASA', 'ROSKOSMOS']
+    exclude = ['main', 'test']
 
 }
