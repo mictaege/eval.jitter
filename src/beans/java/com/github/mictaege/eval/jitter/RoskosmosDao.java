@@ -12,8 +12,11 @@ import static java.util.Arrays.asList;
 
 @OnlyIf(ROSKOSMOS)
 @Tags({Feature.SPACESHIP, Feature.BEARER})
-class RoskosmosDao implements DaoIF {
-    public List<BearerType> findBearers() {
+class RoskosmosDao extends AbstractDao {
+
+    @Override
+    protected List<BearerType> init() {
         return asList(WOSTOK, SOJUS);
     }
+
 }
