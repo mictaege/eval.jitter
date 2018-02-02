@@ -18,7 +18,7 @@ buildscript {
         mavenLocal()
     }
     dependencies {
-        classpath group: 'com.github.mictaege', name: 'jitter-plugin', version:'2018.1'
+        classpath group: 'com.github.mictaege', name: 'jitter-plugin', version:'2018.2'
     }
 }
 
@@ -117,7 +117,7 @@ tasks.compileUiTestJava.dependsOn tasks.compileBeansTestJava
 tasks.compileBeansTestJava.dependsOn tasks.compileModelTestJava
 
 dependencies {
-    modelCompile "com.github.mictaege:jitter-api:2018.1"
+    modelCompile "com.github.mictaege:jitter-api:2018.2"
     modelCompile "de.jensd:fontawesomefx:8.9"
     modelTestCompile "junit:junit:4.12"
     modelTestCompile "org.mockito:mockito-core:2.2.11"
@@ -150,7 +150,35 @@ run {
 
 jitter {
 
-    flavours = ['ESA', 'NASA', 'ROSKOSMOS']
-    exclude = ['main', 'test']
+    flavour {
+        name = 'ESA'
+        criticalTerms {
+            patterns = ['\\b(?i)(esa)\\b', '\\b(?i)(hermes)\\b']
+            patterns << 'Construction Year'
+            excludes << '**/Flavour.java'
+            includes << 'scripts/**'
+            sizeLimitKb = 200
+        }
+    }
+
+    flavour {
+        name = 'NASA'
+        criticalTerms {
+            patterns = ['\\b(?i)(nasa)\\b', '\\b(?i)(mercury)\\b', '\\b(?i)(gemini)\\b']
+            excludes << '**/*.html'
+            excludes << '**/Flavour.java'
+        }
+    }
+
+    flavour {
+        name = 'ROSKOSMOS'
+        criticalTerms {
+            patterns = ['\\b(?i)(roskomos)\\b', '\\b(?i)(wostok)\\b', '\\b(?i)(sojus)\\b']
+            excludes << '**/Flavour.java'
+            includes << 'scripts/**'
+        }
+    }
+
+    excludeSrcSets = ['main', 'test']
 
 }
