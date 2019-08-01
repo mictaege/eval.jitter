@@ -18,7 +18,7 @@ buildscript {
         mavenLocal()
     }
     dependencies {
-        classpath group: 'com.github.mictaege', name: 'jitter-plugin', version:'2018.8'
+        classpath group: 'com.github.mictaege', name: 'jitter-plugin', version:'2019.1'
     }
 }
 
@@ -117,7 +117,7 @@ tasks.compileUiTestJava.dependsOn tasks.compileBeansTestJava
 tasks.compileBeansTestJava.dependsOn tasks.compileModelTestJava
 
 dependencies {
-    modelCompile "com.github.mictaege:jitter-api:2018.8"
+    modelCompile "com.github.mictaege:jitter-api:2019.1"
     modelCompile "de.jensd:fontawesomefx:8.9"
     modelTestCompile "junit:junit:4.12"
     modelTestCompile "org.mockito:mockito-core:2.2.11"
