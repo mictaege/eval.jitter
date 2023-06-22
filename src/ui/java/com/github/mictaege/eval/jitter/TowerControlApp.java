@@ -1,6 +1,12 @@
 package com.github.mictaege.eval.jitter;
 
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import static java.util.Optional.ofNullable;
+import static java.util.ResourceBundle.getBundle;
+
+import java.util.List;
+import java.util.ResourceBundle;
+import java.util.stream.Collectors;
+
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -9,14 +15,6 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
-import java.util.List;
-import java.util.ResourceBundle;
-import java.util.stream.Collectors;
-
-import static de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon.ROCKET;
-import static java.util.Optional.ofNullable;
-import static java.util.ResourceBundle.getBundle;
 
 public class TowerControlApp extends Application {
 
@@ -36,12 +34,12 @@ public class TowerControlApp extends Application {
 
         final TowerControlForm form = new TowerControlForm();
         form.getModel().bind(list.getRoot().getSelectionModel().selectedItemProperty());
-        form.getRoot().setPadding(new Insets(0.0,0.0,40.0,0.0));
+        form.getRoot().setPadding(new Insets(0.0, 0.0, 40.0, 0.0));
         details.getChildren().add(form.getRoot());
 
         final BearerTypeImgView imgView = new BearerTypeImgView();
 
-        final Button btn = new Button(RES.getString("launch"), new FontAwesomeIconView(ROCKET));
+        final Button btn = new Button(RES.getString("launch"));
         btn.setOnAction(e -> {
             final BearerTypeModel model = ofNullable(form.getModel().get())
                     .orElse(new BearerTypeModel(null));
