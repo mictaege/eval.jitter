@@ -1,2 +1,4 @@
 rootProject.name = 'eval.jitter'
+includeBuild("../jitter-api")
+includeBuild("../jitter-plugin")
 

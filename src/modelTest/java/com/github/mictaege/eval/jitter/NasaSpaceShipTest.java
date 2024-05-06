@@ -1,26 +1,27 @@
 package com.github.mictaege.eval.jitter;
 
-import com.github.mictaege.jitter.api.OnlyIf;
-import org.junit.Before;
-import org.junit.Test;
-
-import static com.github.mictaege.eval.jitter.SpaceShipType.MERCURY;
 import static com.github.mictaege.eval.jitter.Flavour.NASA;
+import static com.github.mictaege.eval.jitter.SpaceShipType.MERCURY;
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import com.github.mictaege.jitter.api.OnlyIf;
 
 @OnlyIf(NASA)
-public class NasaSpaceShipTest {
+class NasaSpaceShipTest {
 
     private SpaceShip nasaShip;
 
-    @Before
-    public void context() {
+    @BeforeEach
+    void context() {
         this.nasaShip = new SpaceShip(MERCURY);
     }
 
     @Test
-    public void shouldProvideNasaType() {
+    void shouldProvideNasaType() {
         assertThat(nasaShip.getType(), is(MERCURY));
     }
 

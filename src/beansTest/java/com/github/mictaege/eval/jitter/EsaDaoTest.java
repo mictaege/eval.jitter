@@ -1,16 +1,16 @@
 package com.github.mictaege.eval.jitter;
 
-import com.github.mictaege.jitter.api.Fork;
-import com.github.mictaege.jitter.api.OnlyIf;
-import org.concordion.integration.junit4.ConcordionRunner;
-import org.junit.runner.RunWith;
+import static com.github.mictaege.eval.jitter.Flavour.ESA;
 
 import java.util.List;
 
-import static com.github.mictaege.eval.jitter.Flavour.ESA;
+import org.concordion.api.ConcordionFixture;
+
+import com.github.mictaege.jitter.api.Fork;
+import com.github.mictaege.jitter.api.OnlyIf;
 
 @OnlyIf(ESA)
-@RunWith(ConcordionRunner.class)
+@ConcordionFixture
 @SuppressWarnings("squid:S2187")
 public class EsaDaoTest {
 
@@ -20,7 +20,7 @@ public class EsaDaoTest {
 
     @Fork(ifActive = ESA, to = "esaDao")
     private DaoIF dao() {
-        return new Dao.EsaDao();
+        return new EsaDao();
     }
 
     private DaoIF esaDao() {

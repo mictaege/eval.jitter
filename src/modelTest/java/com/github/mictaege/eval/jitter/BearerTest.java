@@ -1,9 +1,5 @@
 package com.github.mictaege.eval.jitter;
 
-import com.github.mictaege.jitter.api.Fork;
-import com.github.mictaege.jitter.api.OnlyIf;
-import org.junit.Test;
-
 import static com.github.mictaege.eval.jitter.BearerType.ARIANE5;
 import static com.github.mictaege.eval.jitter.BearerType.SOJUS;
 import static com.github.mictaege.eval.jitter.BearerType.TITAN;
@@ -11,12 +7,17 @@ import static com.github.mictaege.eval.jitter.Flavour.ESA;
 import static com.github.mictaege.eval.jitter.Flavour.NASA;
 import static com.github.mictaege.eval.jitter.Flavour.ROSKOSMOS;
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
-public class BearerTest {
+import org.junit.jupiter.api.Test;
+
+import com.github.mictaege.jitter.api.Fork;
+import com.github.mictaege.jitter.api.OnlyIf;
+
+class BearerTest {
 
     @Test
-    public void shouldProvideBearerType() {
+    void shouldProvideBearerType() {
         final BearerType bearerType = bearerType();
 
         final Bearer bearer = new Bearer(bearerType);

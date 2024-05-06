@@ -1,26 +1,27 @@
 package com.github.mictaege.eval.jitter;
 
-import com.github.mictaege.jitter.api.OnlyIf;
-import org.junit.Before;
-import org.junit.Test;
-
-import static com.github.mictaege.eval.jitter.SpaceShipType.WOSTOK;
 import static com.github.mictaege.eval.jitter.Flavour.ROSKOSMOS;
+import static com.github.mictaege.eval.jitter.SpaceShipType.WOSTOK;
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import com.github.mictaege.jitter.api.OnlyIf;
 
 @OnlyIf(ROSKOSMOS)
-public class RoskosmosSpaceShipTest {
+class RoskosmosSpaceShipTest {
 
     private SpaceShip roskosmosShip;
 
-    @Before
-    public void context() {
+    @BeforeEach
+    void context() {
         this.roskosmosShip = new SpaceShip(WOSTOK);
     }
 
     @Test
-    public void shouldProvideRoskosmosType() {
+    void shouldProvideRoskosmosType() {
         assertThat(roskosmosShip.getType(), is(WOSTOK));
     }
 

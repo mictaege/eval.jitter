@@ -1,31 +1,38 @@
-group 'com.github.mictaege'
-version '2023.3'
+group 'io.github.mictaege'
+version '2024.1'
 
 apply plugin: 'java'
 apply plugin: 'jitter'
 apply plugin: 'application'
 apply plugin: 'idea'
+apply plugin: 'org.openjfx.javafxplugin'
 
-sourceCompatibility = 1.8
+java {
+    sourceCompatibility = 21
+    targetCompatibility = 21
+}
+
 
 wrapper {
-    gradleVersion = "7.0.1"
+    gradleVersion = "8.7"
     distributionType = Wrapper.DistributionType.ALL
 }
 
 buildscript {
     repositories {
         mavenCentral()
-        mavenLocal()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
     }
     dependencies {
-        classpath group: 'com.github.mictaege', name: 'jitter-plugin', version:'2023.3'
+        classpath group: 'io.github.mictaege', name: 'jitter-plugin', version:'2024.1'
+        classpath 'org.openjfx:javafx-plugin:0.1.0'
     }
 }
 
 repositories {
     mavenCentral()
-    mavenLocal()
 }
 
 sourceSets {
@@ -118,10 +125,16 @@ tasks.compileUiTestJava.dependsOn tasks.compileBeansTestJava
 tasks.compileBeansTestJava.dependsOn tasks.compileModelTestJava
 
 dependencies {
-    modelImplementation "com.github.mictaege:jitter-api:2023.3"
-    modelTestImplementation "junit:junit:4.12"
-    modelTestImplementation "org.mockito:mockito-core:2.2.11"
-    modelTestImplementation "org.concordion:concordion:2.1.1"
+    modelImplementation "io.github.mictaege:jitter-api:2024.1"
+    modelTestImplementation "org.junit.jupiter:junit-jupiter-api:5.10.2"
+    modelTestImplementation "org.junit.jupiter:junit-jupiter-engine:5.10.2"
+    modelTestImplementation "org.mockito:mockito-core:5.11.0"
+    modelTestImplementation "org.concordion:concordion:4.0.1"
+}
+
+javafx {
+    modules = [ 'javafx.controls', 'javafx.fxml' ]
+    configurations = [ 'uiImplementation' ]
 }
 
 idea {
@@ -180,5 +193,6 @@ jitter {
     }
 
     excludeSrcSets = ['main', 'test']
+    compliance = 21
 
 }

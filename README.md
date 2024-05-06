@@ -4,7 +4,6 @@ This repository contains an evaluation of the [jitter](https://github.com/mictae
 
 ## Prerequisites
 
-- In order to run the application a JDK including JavaFX is required. e.g. `sdk install java 11.0.17.fx-librca`.
 - On Linux/WSL libgtk-3-0 is required also: `sudo apt install libgtk-3-0`
 
 ## Using the application
