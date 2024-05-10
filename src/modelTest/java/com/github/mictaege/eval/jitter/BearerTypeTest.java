@@ -25,7 +25,7 @@ class BearerTypeTest {
     void shouldAssertAriane5() {
         assertThat(ARIANE5.getName(), is("Ariane5"));
         assertThat(ARIANE5.getConstructionYear(), is(1996));
-        assertThat(ARIANE5.getSpaceShip().getType(), is(HERMES));
+        assertThat(ARIANE5.getSpaceShip().type(), is(HERMES));
         assertThat(ARIANE5.getImg(), is("com/github/mictaege/eval/jitter/Ariane5.jpg"));
     }
 
@@ -33,7 +33,7 @@ class BearerTypeTest {
     @OnlyIf(NASA)
     void shouldAssertAtlas() {
         assertThat(ATLAS.getName(), is("Atlas"));
-        assertThat(ATLAS.getSpaceShip().getType(), is(MERCURY));
+        assertThat(ATLAS.getSpaceShip().type(), is(MERCURY));
         assertThat(ATLAS.getImg(), is("com/github/mictaege/eval/jitter/Atlas.jpg"));
     }
 
@@ -41,7 +41,7 @@ class BearerTypeTest {
     @OnlyIf(NASA)
     void shouldAssertTitan() {
         assertThat(TITAN.getName(), is("Titan"));
-        assertThat(TITAN.getSpaceShip().getType(), is(GEMINI));
+        assertThat(TITAN.getSpaceShip().type(), is(GEMINI));
         assertThat(TITAN.getImg(), is("com/github/mictaege/eval/jitter/Titan.jpg"));
     }
 
@@ -49,7 +49,7 @@ class BearerTypeTest {
     @OnlyIf(ROSKOSMOS)
     void shouldAssertWostok() {
         assertThat(WOSTOK.getName(), is("Wostok"));
-        assertThat(WOSTOK.getSpaceShip().getType(), is(SpaceShipType.WOSTOK));
+        assertThat(WOSTOK.getSpaceShip().type(), is(SpaceShipType.WOSTOK));
         assertThat(WOSTOK.getImg(), is("com/github/mictaege/eval/jitter/Wostok.jpg"));
     }
 
@@ -57,7 +57,7 @@ class BearerTypeTest {
     @OnlyIf(ROSKOSMOS)
     void shouldAssertSojus() {
         assertThat(SOJUS.getName(), is("Sojus"));
-        assertThat(SOJUS.getSpaceShip().getType(), is(SpaceShipType.SOJUS));
+        assertThat(SOJUS.getSpaceShip().type(), is(SpaceShipType.SOJUS));
         assertThat(SOJUS.getImg(), is("com/github/mictaege/eval/jitter/Sojus.jpg"));
     }
 

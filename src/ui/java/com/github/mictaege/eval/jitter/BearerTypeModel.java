@@ -35,14 +35,14 @@ public class BearerTypeModel {
         this.name = new SimpleStringProperty(ofNullable(type).map(BearerType::getName).orElse(""));
         this.img = new SimpleStringProperty(ofNullable(type).map(BearerType::getImg).orElse("com/github/mictaege/eval/spoon/example/Default.png"));
         this.constructionYear = new SimpleIntegerProperty(ofNullable(type).map(BearerType::getConstructionYear).orElse(0));
-        this.spaceShip = new SimpleStringProperty(ofNullable(type).map(t -> t.getSpaceShip().getType().getName()).orElse(""));
+        this.spaceShip = new SimpleStringProperty(ofNullable(type).map(t -> t.getSpaceShip().type().getName()).orElse(""));
     }
 
     @OnlyIf({NASA, ROSKOSMOS})
     private void initDefault(BearerType type) {
         this.name = new SimpleStringProperty(ofNullable(type).map(BearerType::getName).orElse(""));
         this.img = new SimpleStringProperty(ofNullable(type).map(BearerType::getImg).orElse("com/github/mictaege/eval/spoon/example/Default.png"));
-        this.spaceShip = new SimpleStringProperty(ofNullable(type).map(t -> t.getSpaceShip().getType().getName()).orElse(""));
+        this.spaceShip = new SimpleStringProperty(ofNullable(type).map(t -> t.getSpaceShip().type().getName()).orElse(""));
     }
 
     public String getName() {

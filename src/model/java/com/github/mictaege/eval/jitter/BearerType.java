@@ -30,6 +30,7 @@ public enum BearerType {
     private SpaceShip spaceShip;
     private String img;
 
+
     @OnlyIf(ESA)
     BearerType(final String name, final int constructionYear, final SpaceShip spaceShip, final String img) {
         this.name = name;
