@@ -1,26 +1,27 @@
 package com.github.mictaege.eval.jitter;
 
-import com.github.mictaege.jitter.api.OnlyIf;
-import org.junit.Before;
-import org.junit.Test;
-
 import static com.github.mictaege.eval.jitter.Flavour.ESA;
 import static com.github.mictaege.eval.jitter.SpaceShipType.HERMES;
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import com.github.mictaege.jitter.api.OnlyIf;
 
 @OnlyIf(ESA)
-public class EsaSpaceShipTest {
+class EsaSpaceShipTest {
 
     private SpaceShip esaShip;
 
-    @Before
-    public void context() {
+    @BeforeEach
+    void context() {
         this.esaShip = new SpaceShip(HERMES);
     }
 
     @Test
-    public void shouldProvideEsaType() {
+    void shouldProvideEsaType() {
         assertThat(esaShip.getType(), is(HERMES));
     }
 
