@@ -1,6 +1,6 @@
 package com.github.mictaege.eval.jitter;
 
-public class Bearer {
+public final class Bearer implements Component {
 
     private final BearerType type;
 
@@ -11,5 +11,10 @@ public class Bearer {
 
     public BearerType getType() {
         return type;
+    }
+
+    @Override
+    public String getName() {
+        return getType().getName();
     }
 }
