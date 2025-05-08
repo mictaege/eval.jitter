@@ -22,7 +22,7 @@ class RoskosmosSpaceShipTest {
 
     @Test
     void shouldProvideRoskosmosType() {
-        assertThat(roskosmosShip.getType(), is(WOSTOK));
+        assertThat(roskosmosShip.type(), is(WOSTOK));
     }
 
 }

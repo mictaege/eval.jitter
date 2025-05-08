@@ -22,7 +22,7 @@ class EsaSpaceShipTest {
 
     @Test
     void shouldProvideEsaType() {
-        assertThat(esaShip.getType(), is(HERMES));
+        assertThat(esaShip.type(), is(HERMES));
     }
 
 }
