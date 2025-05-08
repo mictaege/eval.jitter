@@ -22,7 +22,7 @@ class NasaSpaceShipTest {
 
     @Test
     void shouldProvideNasaType() {
-        assertThat(nasaShip.getType(), is(MERCURY));
+        assertThat(nasaShip.type(), is(MERCURY));
     }
 
 }

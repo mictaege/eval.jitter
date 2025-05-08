@@ -55,19 +55,19 @@ class SpaceShipTest {
     @Test
     @OnlyIf(ESA)
     void shouldProvideEsaType() {
-        assertThat(esaShip.getType(), is(HERMES));
+        assertThat(esaShip.type(), is(HERMES));
     }
 
     @Test
     @OnlyIf(NASA)
     void shouldProvideNasaType() {
-        assertThat(nasaShip.getType(), is(MERCURY));
+        assertThat(nasaShip.type(), is(MERCURY));
     }
 
     @Test
     @OnlyIf(ROSKOSMOS)
     void shouldProvideRoskosmosType() {
-        assertThat(roskosmosShip.getType(), is(WOSTOK));
+        assertThat(roskosmosShip.type(), is(WOSTOK));
     }
 
 }
