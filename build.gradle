@@ -126,8 +126,10 @@ tasks.compileBeansTestJava.dependsOn tasks.compileModelTestJava
 
 dependencies {
     modelImplementation "io.github.mictaege:jitter-api:2024.3"
-    modelTestImplementation "org.junit.jupiter:junit-jupiter-api:5.10.2"
-    modelTestImplementation "org.junit.jupiter:junit-jupiter-engine:5.10.2"
+    testImplementation(platform("org.junit:junit-bom:5.12.2"))
+    testImplementation("org.junit.jupiter:junit-jupiter-api")
+    testImplementation("org.junit.jupiter:junit-jupiter-engine")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher:1.12.2")
     modelTestImplementation "org.mockito:mockito-core:5.17.0"
     modelTestImplementation "org.concordion:concordion:4.0.1"
 }
