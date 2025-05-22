@@ -1,5 +1,5 @@
 group 'io.github.mictaege'
-version '2025.1'
+version '2025.2'
 
 apply plugin: 'java'
 apply plugin: 'jitter'
@@ -26,7 +26,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath group: 'io.github.mictaege', name: 'jitter-plugin', version:'2025.1'
+        classpath group: 'io.github.mictaege', name: 'jitter-plugin', version:'2025.2'
         classpath 'org.openjfx:javafx-plugin:0.1.0'
     }
 }
@@ -125,7 +125,7 @@ tasks.compileUiTestJava.dependsOn tasks.compileBeansTestJava
 tasks.compileBeansTestJava.dependsOn tasks.compileModelTestJava
 
 dependencies {
-    modelImplementation "io.github.mictaege:jitter-api:2025.1"
+    modelImplementation "io.github.mictaege:jitter-api:2025.2"
     testImplementation(platform("org.junit:junit-bom:5.12.2"))
     testImplementation("org.junit.jupiter:junit-jupiter-api")
     testImplementation("org.junit.jupiter:junit-jupiter-engine")
