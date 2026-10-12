@@ -9,3 +9,6 @@ build
 out/
 
 gradle.properties
+*.iml
+*.ipr
+*.iws
