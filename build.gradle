@@ -1,5 +1,5 @@
 group 'io.github.mictaege'
-version '2026.1'
+version '2026.2'
 
 apply plugin: 'java'
 apply plugin: 'jitter'
@@ -14,7 +14,7 @@ java {
 
 
 wrapper {
-    gradleVersion = "8.7"
+    gradleVersion = "9.8.0"
     distributionType = Wrapper.DistributionType.ALL
 }
 
@@ -26,7 +26,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath group: 'io.github.mictaege', name: 'jitter-plugin', version:'2026.1'
+        classpath group: 'io.github.mictaege', name: 'jitter-plugin', version:'2026.2'
         classpath 'org.openjfx:javafx-plugin:0.1.0'
     }
 }
@@ -125,7 +125,7 @@ tasks.compileUiTestJava.dependsOn tasks.compileBeansTestJava
 tasks.compileBeansTestJava.dependsOn tasks.compileModelTestJava
 
 dependencies {
-    modelImplementation "io.github.mictaege:jitter-api:2026.1"
+    modelImplementation "io.github.mictaege:jitter-api:2026.2"
     testImplementation(platform("org.junit:junit-bom:5.12.2"))
     testImplementation("org.junit.jupiter:junit-jupiter-api")
     testImplementation("org.junit.jupiter:junit-jupiter-engine")
@@ -142,15 +142,17 @@ javafx {
 idea {
     module {
         inheritOutputDirs = false
-        testSourceDirs += file('modelTest')
-        testSourceDirs += file('beansTest')
-        testSourceDirs += file('uiTest')
+        testSources.from(sourceSets.modelTest.java.srcDirs)
+        testSources.from(sourceSets.beansTest.java.srcDirs)
+        testSources.from(sourceSets.uiTest.java.srcDirs)
         outputDir file('build/classes/main')
         testOutputDir file('build/classes/test')
     }
 }
 
-mainClassName = "com.github.mictaege.eval.jitter.TowerControlMain"
+application {
+    mainClass = "com.github.mictaege.eval.jitter.TowerControlMain"
+}
 
 jar {
     from sourceSets.model.output
