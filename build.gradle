@@ -14,7 +14,7 @@ java {
 
 
 wrapper {
-    gradleVersion = "8.7"
+    gradleVersion = "9.8.0"
     distributionType = Wrapper.DistributionType.ALL
 }
 
@@ -142,15 +142,17 @@ javafx {
 idea {
     module {
         inheritOutputDirs = false
-        testSourceDirs += file('modelTest')
-        testSourceDirs += file('beansTest')
-        testSourceDirs += file('uiTest')
+        testSources.from(sourceSets.modelTest.java.srcDirs)
+        testSources.from(sourceSets.beansTest.java.srcDirs)
+        testSources.from(sourceSets.uiTest.java.srcDirs)
         outputDir file('build/classes/main')
         testOutputDir file('build/classes/test')
     }
 }
 
-mainClassName = "com.github.mictaege.eval.jitter.TowerControlMain"
+application {
+    mainClass = "com.github.mictaege.eval.jitter.TowerControlMain"
+}
 
 jar {
     from sourceSets.model.output
