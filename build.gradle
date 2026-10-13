@@ -139,6 +139,15 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api")
     testImplementation("org.junit.jupiter:junit-jupiter-engine")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher:1.12.2")
+    // the custom api source set of the simulator, selected by capability
+    // like the standard testFixtures(...) notation does: the test compiles
+    // against the full fixtures model (sharedFixturesApiElements) and runs
+    // against the stripped model (the plugin replaced the runtime variant)
+    testImplementation(project(':simulator')) {
+        capabilities {
+            requireCapability 'io.github.mictaege.eval:simulator-sharedFixtures:2026.2'
+        }
+    }
     modelTestImplementation "org.mockito:mockito-core:5.17.0"
     modelTestImplementation "org.concordion:concordion:4.0.1"
 }
@@ -207,4 +216,14 @@ jitter {
 
     excludeSrcSets = ['main', 'test']
 
+}
+
+// the demo test of the simulator fixtures runs with JUnit 5; the active
+// flavour is read at execution time and passed to the test JVM - after
+// the flavourXyz task of the same build has selected it
+test {
+    useJUnitPlatform()
+    doFirst {
+        systemProperty 'jitter.active.flavour', System.getProperty('jitter.active.flavour', '')
+    }
 }

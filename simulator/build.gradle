@@ -1,0 +1,96 @@
+// The mission simulator library: a flavour dependency of the demo
+// application with a CUSTOM api source set, wired like the standard
+// test fixtures. Its main source set has the packaging role (the
+// default), so the simulator's runtime artifact is its flavour-stripped
+// jar; its sharedFixtures source set has the api role, so the full
+// classes stay the compile artifact and the stripped
+// jitterSharedFixturesJar replaces the outgoing runtime variant.
+buildscript {
+    repositories {
+        mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath group: 'io.github.mictaege', name: 'jitter-plugin', version: '2026.2'
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'jitter'
+
+java {
+    sourceCompatibility = 21
+    targetCompatibility = 21
+}
+
+repositories {
+    mavenCentral()
+}
+
+sourceSets {
+    sharedFixtures {
+        java {
+            srcDir 'src/sharedFixtures/java'
+        }
+    }
+}
+
+tasks.register('sharedFixturesJar', Jar) {
+    archiveBaseName = 'simulator-sharedFixtures'
+    from(sourceSets.sharedFixtures.output)
+}
+
+// the hand-rolled variant pair of the custom api source set, following
+// the java-test-fixtures conventions: the full jar is the compile
+// artifact, the runtime variant gets its artifacts replaced with the
+// stripped jitterSharedFixturesJar by the plugin. Consumers select
+// the pair by capability.
+configurations {
+    sharedFixturesImplementation {
+        canBeResolved = false
+        canBeConsumed = false
+    }
+    sharedFixturesApiElements {
+        canBeResolved = false
+        canBeConsumed = true
+        extendsFrom sharedFixturesImplementation
+        attributes {
+            attribute(org.gradle.api.attributes.Usage.USAGE_ATTRIBUTE,
+                    objects.named(org.gradle.api.attributes.Usage, 'java-api'))
+        }
+        outgoing {
+            capability 'io.github.mictaege.eval:simulator-sharedFixtures:2026.2'
+            artifact(tasks.named('sharedFixturesJar'))
+        }
+    }
+    sharedFixturesRuntimeElements {
+        canBeResolved = false
+        canBeConsumed = true
+        extendsFrom sharedFixturesImplementation
+        attributes {
+            attribute(org.gradle.api.attributes.Usage.USAGE_ATTRIBUTE,
+                    objects.named(org.gradle.api.attributes.Usage, 'java-runtime'))
+        }
+        outgoing {
+            capability 'io.github.mictaege.eval:simulator-sharedFixtures:2026.2'
+        }
+    }
+}
+
+dependencies {
+    implementation "io.github.mictaege:jitter-api:2026.2"
+    sharedFixturesImplementation "io.github.mictaege:jitter-api:2026.2"
+}
+
+jitter {
+    flavour { name = 'ESA' }
+    flavour { name = 'NASA' }
+    flavour { name = 'ROSKOSMOS' }
+
+    // explicit pin of the source set roles: main is the packaging set
+    // (the default), sharedFixtures carries the api role
+    packagingSrcSets = ['main']
+    apiSrcSets = ['sharedFixtures']
+}

@@ -35,3 +35,10 @@ gradle clean test
 ```
 
 Running the application requires the selection of one flavour.
+
+## Project structure
+
+The example is a multi module build that shows the source set roles of the _jitter_ plugin:
+
+- The `simulator` subproject is a flavour library. Its `main` source set has the _packaging_ role (the default): the simulator's runtime artifact is its flavour-stripped jar. Its `sharedFixtures` source set has the _api_ role (configured via `jitter.apiSrcSets`): the full classes stay the compile artifact and the stripped `jitterSharedFixturesJar` replaces the outgoing runtime variant, wired like the standard test fixtures and selected by the consumers by capability. The `SimFixtureFlavourTest` of the root project demonstrates the contract: it compiles against the full 150% model of the fixtures and runs against the stripped model of the active flavour.
+- The root project's `model`, `beans` and `ui` source sets are test-like (no explicit role): the stripped tree is their runtime identity, downstream source sets compile against the full classes via task references (see the `fullOf` helper in the build script). Its `main` and `test` source sets are excluded from the flavouring: the demo application assembles the flavour models, and the flavour-agnostic test verifies the stripped simulator fixtures reflectively.
