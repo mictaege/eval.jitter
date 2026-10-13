@@ -35,6 +35,15 @@ repositories {
     mavenCentral()
 }
 
+// The full (150%) classes and processed resources of a source set: under
+// jitter the source set OUTPUT is the flavour-stripped tree, so a consumer
+// source set must compile against the compile task outputs instead - the
+// runtime classpath keeps the stripped output (the flavour model at runtime)
+def fullOf = { String srcSetName ->
+    def suffix = srcSetName == 'main' ? '' : srcSetName.capitalize()
+    files(tasks.named("compile${suffix}Java"), tasks.named("process${suffix}Resources"))
+}
+
 sourceSets {
     model {
         java {
@@ -45,7 +54,7 @@ sourceSets {
         }
     }
     modelTest {
-        compileClasspath += model.runtimeClasspath
+        compileClasspath += model.compileClasspath + fullOf('model')
         runtimeClasspath += model.runtimeClasspath
         java {
             srcDir 'src/modelTest/java '
@@ -55,7 +64,7 @@ sourceSets {
         }
     }
     beans {
-        compileClasspath += model.runtimeClasspath
+        compileClasspath += model.compileClasspath + fullOf('model')
         runtimeClasspath += model.runtimeClasspath
         java {
             srcDir 'src/beans/java'
@@ -65,7 +74,7 @@ sourceSets {
         }
     }
     beansTest {
-        compileClasspath += beans.runtimeClasspath + modelTest.runtimeClasspath
+        compileClasspath += beans.compileClasspath + modelTest.compileClasspath + fullOf('beans') + fullOf('modelTest')
         runtimeClasspath += beans.runtimeClasspath + modelTest.runtimeClasspath
         java {
             srcDir 'src/beansTest/java'
@@ -75,7 +84,7 @@ sourceSets {
         }
     }
     ui {
-        compileClasspath += beans.runtimeClasspath
+        compileClasspath += beans.compileClasspath + fullOf('beans')
         runtimeClasspath += beans.runtimeClasspath
         java {
             srcDir 'src/ui/java'
@@ -85,7 +94,7 @@ sourceSets {
         }
     }
     uiTest {
-        compileClasspath += ui.runtimeClasspath + beansTest.runtimeClasspath
+        compileClasspath += ui.compileClasspath + beansTest.compileClasspath + fullOf('ui') + fullOf('beansTest')
         runtimeClasspath += ui.runtimeClasspath + beansTest.runtimeClasspath
         java {
             srcDir 'src/uiTest/java'
@@ -95,7 +104,7 @@ sourceSets {
         }
     }
     main {
-        compileClasspath += ui.runtimeClasspath
+        compileClasspath += ui.compileClasspath + fullOf('ui')
         runtimeClasspath += ui.runtimeClasspath
         java {
             srcDir 'src/main/java'
@@ -105,7 +114,7 @@ sourceSets {
         }
     }
     test {
-        compileClasspath += main.runtimeClasspath + uiTest.runtimeClasspath
+        compileClasspath += main.compileClasspath + uiTest.compileClasspath + fullOf('main') + fullOf('uiTest')
         runtimeClasspath += main.runtimeClasspath + uiTest.runtimeClasspath
         java {
             srcDir 'src/test/java'
@@ -197,6 +206,5 @@ jitter {
     }
 
     excludeSrcSets = ['main', 'test']
-    compliance = 21
 
 }
