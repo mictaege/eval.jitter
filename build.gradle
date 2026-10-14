@@ -6,6 +6,7 @@ apply plugin: 'jitter'
 apply plugin: 'application'
 apply plugin: 'idea'
 apply plugin: 'org.openjfx.javafxplugin'
+apply plugin: 'org.jetbrains.kotlin.jvm'
 
 java {
     sourceCompatibility = 21
@@ -28,6 +29,7 @@ buildscript {
     dependencies {
         classpath group: 'io.github.mictaege', name: 'jitter-plugin', version:'2026.3-rc2'
         classpath 'org.openjfx:javafx-plugin:0.1.0'
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:2.4.21'
     }
 }
 
@@ -47,6 +49,11 @@ def fullOf = { String srcSetName ->
 sourceSets {
     model {
         java {
+            srcDir 'src/model/java'
+        }
+        // the Kotlin flavour of the model sources: the demo of the Kotlin
+        // dejittering, the Kotlin sources live beside the Java sources
+        kotlin {
             srcDir 'src/model/java'
         }
         resources {
@@ -135,6 +142,7 @@ tasks.compileBeansTestJava.dependsOn tasks.compileModelTestJava
 
 dependencies {
     modelImplementation "io.github.mictaege:jitter-api:2026.3-rc2"
+    modelImplementation "org.jetbrains.kotlin:kotlin-stdlib:2.4.21"
     testImplementation(platform("org.junit:junit-bom:5.12.2"))
     testImplementation("org.junit.jupiter:junit-jupiter-api")
     testImplementation("org.junit.jupiter:junit-jupiter-engine")
