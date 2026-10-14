@@ -218,11 +218,14 @@ jitter {
 
 }
 
-// the demo test of the simulator fixtures runs with JUnit 5; the active
-// flavour is read at execution time and passed to the test JVM - after
-// the flavourXyz task of the same build has selected it
+// the demo tests run with JUnit 5; the active flavour is read at execution
+// time and passed to the test JVM - after the flavourXyz task of the same
+// build has selected it
 test {
     useJUnitPlatform()
+    // the dejittered model demo reads the output of the aggregate dejitter
+    // task, so the variant is fresh for the active flavour
+    dependsOn 'dejitter'
     doFirst {
         systemProperty 'jitter.active.flavour', System.getProperty('jitter.active.flavour', '')
     }
