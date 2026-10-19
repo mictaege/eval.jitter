@@ -52,6 +52,23 @@ verifies that assertion mechanically:
 gradle flavourNASA jitterVerifyInlinedConstants
 ```
 
+## Flavour-variant constant values
+
+When the *value* of a constant differs per flavour, ```@AlterConstValue``` declares the flavours'
+values on the constant itself (```TableNames``` in the model source set): the String constant's full
+model value is the placeholder anchor - the fully qualified name of the constant - which the
+flavour build re-bakes wherever javac inlined it, and wrapper constants (```Integer```, ...) are not
+inlined at all, so the flavour build patches their single assignment and the usages follow the
+flavour at runtime. ```PeemJobs``` is the consumer, and
+[```AlterConstValueTest```](src/modelTest/java/com/github/mictaege/eval/jitter/AlterConstValueTest.java)
+asserts the active flavour's values in each flavour:
+
+```Shell
+gradle flavourEsa modelTest
+gradle flavourNASA modelTest
+gradle flavourRoskosmos modelTest
+```
+
 ## Project structure
 
 The example is a multi module build that shows the source set roles of the _jitter_ plugin:
