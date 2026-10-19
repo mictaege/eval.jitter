@@ -36,6 +36,22 @@ gradle clean test
 
 Running the application requires the selection of one flavour.
 
+## Flavour-variant compile-time constants
+
+The ```modelTest``` source set demonstrates the flavour handling of compile-time
+constants ([```OnlyIfTest```](src/modelTest/java/com/github/mictaege/eval/jitter/OnlyIfTest.java)
+and [```OnlyIfStringTest```](src/modelTest/java/com/github/mictaege/eval/jitter/OnlyIfStringTest.java)):
+javac inlines constant variables into their usages, so the flavour stripping cannot apply an
+```@OnlyIf``` gate at the usage sites. Flavour-variant constants therefore need the
+```@InlinedConstantApproved``` marker - the review assertion that every usage sits on a member
+gated with a subset of the constant's flavours - and the usages in the demo are own-flavour only,
+because a usage in a wider gated member would keep the inlined full model value. The opt-in check
+verifies that assertion mechanically:
+
+```Shell
+gradle flavourNASA jitterVerifyInlinedConstants
+```
+
 ## Project structure
 
 The example is a multi module build that shows the source set roles of the _jitter_ plugin:

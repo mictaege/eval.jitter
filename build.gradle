@@ -238,3 +238,10 @@ test {
         systemProperty 'jitter.active.flavour', System.getProperty('jitter.active.flavour', '')
     }
 }
+tasks.register('modelTest', Test) {
+    description = 'Runs the model tests.'
+    group = 'verification'
+    testClassesDirs = sourceSets.modelTest.output.classesDirs
+    classpath = sourceSets.modelTest.runtimeClasspath
+    useJUnitPlatform()
+}
