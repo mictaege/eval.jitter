@@ -1,5 +1,5 @@
 group 'io.github.mictaege'
-version '2026.3-rc7'
+version '2026.3-rc8'
 
 apply plugin: 'java'
 apply plugin: 'jitter'
@@ -27,7 +27,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath group: 'io.github.mictaege', name: 'jitter-plugin', version:'2026.3-rc7'
+        classpath group: 'io.github.mictaege', name: 'jitter-plugin', version:'2026.3-rc8'
         classpath 'org.openjfx:javafx-plugin:0.1.0'
         classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:2.4.21'
     }
@@ -141,7 +141,7 @@ tasks.compileUiTestJava.dependsOn tasks.compileBeansTestJava
 tasks.compileBeansTestJava.dependsOn tasks.compileModelTestJava
 
 dependencies {
-    modelImplementation "io.github.mictaege:jitter-api:2026.3-rc7"
+    modelImplementation "io.github.mictaege:jitter-api:2026.3-rc8"
     modelImplementation "org.jetbrains.kotlin:kotlin-stdlib:2.4.21"
     testImplementation(platform("org.junit:junit-bom:5.12.2"))
     testImplementation("org.junit.jupiter:junit-jupiter-api")
@@ -153,7 +153,7 @@ dependencies {
     // against the stripped model (the plugin replaced the runtime variant)
     testImplementation(project(':simulator')) {
         capabilities {
-            requireCapability 'io.github.mictaege.eval:simulator-sharedFixtures:2026.3-rc7'
+            requireCapability 'io.github.mictaege.eval:simulator-sharedFixtures:2026.3-rc8'
         }
     }
     modelTestImplementation "org.mockito:mockito-core:5.17.0"
