@@ -62,6 +62,23 @@ public class DejitteredModelTest {
     }
 
     @Test
+    void theKotlinSourcesAreTheActiveFlavoursVariant() throws IOException {
+        // the Kotlin sources dejitter like the Java sources: the flavour
+        // gated members of the inactive flavours leave the variant, the
+        // annotations are cleaned - the annotation values are compile time
+        // constants of the Flavour class, resolved from the compile classpath
+        final String gadgets = source("model", "KotlinGadgets.kt");
+        assertThat(gadgets, not(containsString("@OnlyIf")));
+        assertThat(gadgets, containsString("fun plain(): String = \"plain\""));
+        assertThat(gadgets.contains("esaOnly"), is(flavour.isEmpty() || "ESA".equals(flavour)));
+        assertThat(gadgets.contains("EsaGadget"), is(flavour.isEmpty() || "ESA".equals(flavour)));
+        assertThat(gadgets.contains("nasaRoskosmosOnly"),
+                is(flavour.isEmpty() || "NASA".equals(flavour) || "ROSKOSMOS".equals(flavour)));
+        assertThat(gadgets.contains("NasaRoskosmosGadget"),
+                is(flavour.isEmpty() || "NASA".equals(flavour) || "ROSKOSMOS".equals(flavour)));
+    }
+
+    @Test
     void theBeansAreTheActiveFlavoursVariant() throws IOException {
         // the @Alter target class carries the active flavour's implementation
         // and its name; the template classes are consumed

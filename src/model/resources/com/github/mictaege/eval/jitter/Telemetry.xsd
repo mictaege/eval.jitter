@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Demo of the flavour gates inside an XML document: this unified schema
+  ~ carries the flavour variants of all three space agencies in a single
+  ~ document. The jaxb-like code generators (and every other XML tool)
+  ~ read it as it is - the gates sit in the standard appinfo hook and are
+  ~ ignored by them - while the jitter plugin resolves the gates while the
+  ~ resources are copied: the processed resources, the runtime artifacts
+  ~ and the dejittered variant contain only the active flavour's variant,
+  ~ without any gate residue.
+  -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:jitter="https://mictaege.github.io/jitter">
+
+    <xsd:element name="telemetry">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="mission_code" type="mission_code_type"/>
+                <xsd:element name="abort_signal" type="xsd:boolean" minOccurs="0">
+                    <xsd:annotation>
+                        <xsd:documentation>the abort signal exists in the NASA fleet only</xsd:documentation>
+                        <xsd:appinfo>
+                            <jitter:onlyIf flavours="NASA"/>
+                        </xsd:appinfo>
+                    </xsd:annotation>
+                </xsd:element>
+                <xsd:element name="crew" type="xsd:string" minOccurs="0">
+                    <xsd:annotation>
+                        <xsd:documentation>the Roskosmos fleet always reports a crew</xsd:documentation>
+                        <xsd:appinfo>
+                            <jitter:set ifActive="ROSKOSMOS" minOccurs="1"/>
+                        </xsd:appinfo>
+                    </xsd:annotation>
+                </xsd:element>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:simpleType name="mission_code_type">
+        <xsd:restriction base="xsd:string">
+            <!-- a pattern facet is an OR by definition, so the unified schema
+                 cannot carry the per flavour variants ungated -->
+            <xsd:pattern value="[A-Z]{3}">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        <jitter:onlyIf flavours="ESA"/>
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:pattern>
+            <xsd:pattern value="\d{3}">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        <jitter:onlyIf flavours="NASA"/>
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:pattern>
+            <xsd:pattern value="[A-Z]{2}\d">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        <jitter:onlyIf flavours="ROSKOSMOS"/>
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:pattern>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+</xsd:schema>
