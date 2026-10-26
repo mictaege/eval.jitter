@@ -13,7 +13,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath group: 'io.github.mictaege', name: 'jitter-plugin', version: '2026.3-rc10'
+        classpath group: 'io.github.mictaege', name: 'jitter-plugin', version: '2026.3'
     }
 }
 
@@ -61,7 +61,7 @@ configurations {
                     objects.named(org.gradle.api.attributes.Usage, 'java-api'))
         }
         outgoing {
-            capability 'io.github.mictaege.eval:simulator-sharedFixtures:2026.3-rc10'
+            capability 'io.github.mictaege.eval:simulator-sharedFixtures:2026.3'
             artifact(tasks.named('sharedFixturesJar'))
         }
     }
@@ -74,14 +74,14 @@ configurations {
                     objects.named(org.gradle.api.attributes.Usage, 'java-runtime'))
         }
         outgoing {
-            capability 'io.github.mictaege.eval:simulator-sharedFixtures:2026.3-rc10'
+            capability 'io.github.mictaege.eval:simulator-sharedFixtures:2026.3'
         }
     }
 }
 
 dependencies {
-    implementation "io.github.mictaege:jitter-api:2026.3-rc10"
-    sharedFixturesImplementation "io.github.mictaege:jitter-api:2026.3-rc10"
+    implementation "io.github.mictaege:jitter-api:2026.3"
+    sharedFixturesImplementation "io.github.mictaege:jitter-api:2026.3"
 }
 
 jitter {
