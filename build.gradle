@@ -158,6 +158,16 @@ dependencies {
     }
     modelTestImplementation "org.mockito:mockito-core:5.24.0"
     modelTestImplementation "org.concordion:concordion:4.0.1"
+    // the beansTest Concordion fixtures are JUnit 4 (@RunWith(ConcordionRunner)),
+    // executed on the JUnit platform through the vintage engine; declared directly
+    // on beansTest because the jitter plugin rewires the stripped runtime classpath.
+    // The bom aligns the JUnit platform dragged in transitively by concordion
+    // (1.9.3) with the 6.1.3 engine/launcher, otherwise the vintage engine
+    // crashes with NoSuchMethodError
+    beansTestImplementation(platform("org.junit:junit-bom:6.1.3"))
+    beansTestImplementation "org.concordion:concordion:4.0.1"
+    beansTestRuntimeOnly "org.junit.platform:junit-platform-launcher:6.1.3"
+    beansTestRuntimeOnly "org.junit.vintage:junit-vintage-engine:6.1.3"
 }
 
 javafx {
@@ -243,5 +253,12 @@ tasks.register('modelTest', Test) {
     group = 'verification'
     testClassesDirs = sourceSets.modelTest.output.classesDirs
     classpath = sourceSets.modelTest.runtimeClasspath
+    useJUnitPlatform()
+}
+tasks.register('beansTest', Test) {
+    description = 'Runs the beans tests (Concordion fixtures via the JUnit vintage engine).'
+    group = 'verification'
+    testClassesDirs = sourceSets.beansTest.output.classesDirs
+    classpath = sourceSets.beansTest.runtimeClasspath
     useJUnitPlatform()
 }
