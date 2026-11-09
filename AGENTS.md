@@ -1,5 +1,8 @@
 # AGENTS.md — eval.jitter
 
+> New to the jitter family? Read the onboarding guide in the family store first:
+> https://github.com/mictaege/jitter-openspec (README.md).
+
 Project context lives in OpenSpec: `openspec/config.yaml`. This project is the reference
 demo/consumer of the jitter family — behavior specs live in the sibling repos
 (`jitter-api/openspec/specs/annotations`, `jitter-plugin/openspec/specs/*`, `jitter/openspec/specs/gate-schema`),
