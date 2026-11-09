@@ -1,0 +1,30 @@
+schema: spec-driven
+
+context: |
+  eval.jitter is an evaluation/demo application for the jitter-plugin Gradle plugin: a simple
+  JavaFX application whose flavours are different space agencies (ESA, NASA, ROSKOSMOS), selected
+  via generated Gradle tasks (flavourESA, flavourNASA, flavourROSKOSMOS). It is the reference
+  example/consumer of jitter-plugin (which depends on jitter-api). NOT published; illustrative
+  only.
+
+  Family: part of the jitter family (store `jitter`, ~/openspec/jitter, use
+  `openspec ... --store jitter`). settings.gradle composite-builds ../jitter-api and
+  ../jitter-plugin via includeBuild, so local plugin/API changes are picked up without
+  publishing.
+
+  Stack: Java across custom source sets (src/main, src/model, src/beans, src/ui + *Test sets —
+  MVVM-like separation, each compiled as the full 150% model and stripped independently); JavaFX
+  (javafx.controls, javafx.fxml); Groovy DSL build.gradle (not Kotlin DSL); build via ./gradlew;
+  JUnit Jupiter (BOM-managed). Runtime prerequisite on Linux/WSL: libgtk-3-0. License Apache-2.0.
+
+  Conventions for changes:
+  - Treat this as a living example: keep the flavour demo simple and easy to follow.
+  - After changing jitter-plugin or jitter-api, validate by building/running this project with
+    each flavour.
+  - The demo covers the plugin's full feature set: @OnlyIf/@Fork/@Alter/@AlterConstValue,
+    inlined-constant handling, flavour-specific resources and XML gates (Telemetry.xsd), and
+    dejittered source variants.
+
+  There are intentionally no capability specs here; behavior specs live in jitter-api
+  (openspec/specs/annotations) and jitter-plugin (openspec/specs/*), family planning in store
+  `jitter`. User-facing docs: README.md.
